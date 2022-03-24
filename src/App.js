@@ -2,14 +2,21 @@ import Header from './Header'
 import BoardHeader from './BoardHeader'
 import PostForm from './PostForm'
 import AuthModal from './AuthModal'
+import AuthModalContext from './AuthModalContext'
+import { useState } from 'react'
 
 import './styles.css'
 
 function App() {
+  const [showAuthModal, setShowAuthModal] = useState(false)
+  const [modalType, setModalType] = useState('login')
+
   return (
-    <div className='App'>
+    <AuthModalContext.Provider
+      value={{ showAuthModal, setShowAuthModal, modalType, setModalType }}
+    >
       <Header />
-      <AuthModal show={false} />
+      <AuthModal />
       <BoardHeader />
       <PostForm />
       <div className='px-6 bg-reddit_dark text-reddit_text'>
@@ -30,7 +37,7 @@ function App() {
           </div>
         </div>
       </div>
-    </div>
+    </AuthModalContext.Provider>
   )
 }
 

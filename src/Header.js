@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import logo from './assets/logo.png'
 import {
   BellIcon,
@@ -11,8 +11,10 @@ import {
 } from '@heroicons/react/outline'
 import ClickOutHandler from 'react-clickout-handler'
 import Button from './Button'
+import AuthModalContext from './AuthModalContext'
 
 function Header() {
+  const modalContext = useContext(AuthModalContext)
   const [userDropdownVisibility, setUserDropdownVisibility] = useState('hidden')
 
   const toggleUserDropDown = e => {
@@ -48,10 +50,25 @@ function Header() {
         </button>
 
         <div className='mx-2 hidden sm:block'>
-          <Button outline={1} className='mr-1 h-8'>
+          <Button
+            outline={1}
+            className='mr-1 h-8'
+            onClick={() => {
+              modalContext.setShowAuthModal(true)
+              modalContext.setModalType('login')
+            }}
+          >
             Login
           </Button>
-          <Button className='h-8'>Sign Up</Button>
+          <Button
+            className='h-8'
+            onClick={() => {
+              modalContext.setShowAuthModal(true)
+              modalContext.setModalType('register')
+            }}
+          >
+            Sign Up
+          </Button>
         </div>
         <ClickOutHandler
           onClickOut={() => {
