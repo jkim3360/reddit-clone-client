@@ -82,18 +82,24 @@ function Header() {
             <UserIcon className='w-6 h-6 text-gray-400 m-1' />
             <ChevronDownIcon className='text-gray-500 w-5 h-5 mt-2 ml-1' />
           </button>
+          <div
+            className={
+              'absolute right-0 top-8 bg-reddit_dark border border-gray-700 z-10 rounded-md text-reddit_text overflow-hidden ' +
+              userDropdownVisibility
+            }
+          >
+            <button
+              className='block flex w-40 py-2 px-3 hover:bg-gray-300 hover:text-black text-sm'
+              onClick={() => {
+                modalContext.setShowAuthModal(true)
+                setUserDropdownVisibility('hidden')
+              }}
+            >
+              <LoginIcon className='w-6 h-6 mr-2' />
+              Log In / Sign Up
+            </button>
+          </div>
         </ClickOutHandler>
-        <div
-          className={
-            'absolute right-0 top-8 bg-reddit_dark border border-gray-700 z-10 rounded-md text-reddit_text overflow-hidden ' +
-            userDropdownVisibility
-          }
-        >
-          <button className='block flex w-40 py-2 px-3 hover:bg-gray-300 hover:text-black text-sm'>
-            <LoginIcon className='w-6 h-6 mr-2' />
-            Log In / Sign Up
-          </button>
-        </div>
       </div>
     </header>
   )
