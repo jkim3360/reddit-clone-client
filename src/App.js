@@ -19,7 +19,7 @@ function App() {
       <AuthModal />
       <BoardHeader />
       <PostForm />
-      <div className='px-6 bg-reddit_dark text-reddit_text'>
+      <div className='px-6 bg-reddit_dark text-reddit_text pb-4'>
         <div className='border border-reddit_border bg-reddit_dark-brighter p-2 rounded-md'>
           <h5 className='text-reddit_text-darker text-sm mb-1'>
             Posted by u/AutoModerator 17 days ago
