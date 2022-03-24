@@ -4,6 +4,7 @@ import {
   BellIcon,
   ChatIcon,
   PlusIcon,
+  LogoutIcon,
   SearchIcon,
   ChevronDownIcon,
   UserIcon,
@@ -12,10 +13,13 @@ import {
 import ClickOutHandler from 'react-clickout-handler'
 import Button from './Button'
 import AuthModalContext from './AuthModalContext'
+import UserContext from './UserContext'
+import Avatar from './assets/avatar.png'
 
 function Header() {
-  const modalContext = useContext(AuthModalContext)
   const [userDropdownVisibility, setUserDropdownVisibility] = useState('hidden')
+  const modalContext = useContext(AuthModalContext)
+  const userContext = useContext(UserContext)
 
   const toggleUserDropDown = e => {
     if (userDropdownVisibility === 'hidden') {
@@ -39,37 +43,46 @@ function Header() {
             placeholder='Search'
           />
         </form>
-        <button className='px-2 py-1'>
-          <ChatIcon className='text-gray-400 w-6 h-6 mx-2' />
-        </button>
-        <button className='px-2 py-1'>
-          <BellIcon className='text-gray-400 w-6 h-6 mx-2' />
-        </button>
-        <button className='px-2 py-1'>
-          <PlusIcon className='text-gray-400 w-6 h-6 mx-2' />
-        </button>
 
-        <div className='mx-2 hidden sm:block'>
-          <Button
-            outline={1}
-            className='mr-1 h-8'
-            onClick={() => {
-              modalContext.setShowAuthModal(true)
-              modalContext.setModalType('login')
-            }}
-          >
-            Login
-          </Button>
-          <Button
-            className='h-8'
-            onClick={() => {
-              modalContext.setShowAuthModal(true)
-              modalContext.setModalType('register')
-            }}
-          >
-            Sign Up
-          </Button>
-        </div>
+        {userContext.username && (
+          <>
+            {' '}
+            <button className='px-2 py-1'>
+              <ChatIcon className='text-gray-400 w-6 h-6 mx-2' />
+            </button>
+            <button className='px-2 py-1'>
+              <BellIcon className='text-gray-400 w-6 h-6 mx-2' />
+            </button>
+            <button className='px-2 py-1'>
+              <PlusIcon className='text-gray-400 w-6 h-6 mx-2' />
+            </button>
+          </>
+        )}
+
+        {!userContext.username && (
+          <div className='mx-2 hidden sm:block'>
+            <Button
+              outline={1}
+              className='mr-1 h-8'
+              onClick={() => {
+                modalContext.setShowAuthModal(true)
+                modalContext.setModalType('login')
+              }}
+            >
+              Login
+            </Button>
+            <Button
+              className='h-8'
+              onClick={() => {
+                modalContext.setShowAuthModal(true)
+                modalContext.setModalType('register')
+              }}
+            >
+              Sign Up
+            </Button>
+          </div>
+        )}
+
         <ClickOutHandler
           onClickOut={() => {
             setUserDropdownVisibility('hidden')
@@ -79,7 +92,21 @@ function Header() {
             className='rounded-md flex ml-4'
             onClick={() => toggleUserDropDown()}
           >
-            <UserIcon className='w-6 h-6 text-gray-400 m-1' />
+            {!userContext.username && (
+              <UserIcon className='w-6 h-6 text-gray-400 m-1' />
+            )}
+
+            {userContext.username && (
+              <div className='bg-gray-600 rounded-md w-8 h-8'>
+                <img
+                  src={Avatar}
+                  alt=''
+                  style={{ filter: 'invert(100%)' }}
+                  className='block'
+                />
+              </div>
+            )}
+
             <ChevronDownIcon className='text-gray-500 w-5 h-5 mt-2 ml-1' />
           </button>
           <div
@@ -88,16 +115,30 @@ function Header() {
               userDropdownVisibility
             }
           >
-            <button
-              className='block flex w-40 py-2 px-3 hover:bg-gray-300 hover:text-black text-sm'
-              onClick={() => {
-                modalContext.setShowAuthModal(true)
-                setUserDropdownVisibility('hidden')
-              }}
-            >
-              <LoginIcon className='w-6 h-6 mr-2' />
-              Log In / Sign Up
-            </button>
+            {!userContext.username && (
+              <button
+                className='block flex w-40 py-2 px-3 hover:bg-gray-300 hover:text-black text-sm'
+                onClick={() => {
+                  modalContext.setShowAuthModal(true)
+                  setUserDropdownVisibility('hidden')
+                }}
+              >
+                <LoginIcon className='w-6 h-6 mr-2' />
+                Log In / Sign Up
+              </button>
+            )}
+
+            {userContext.username && (
+              <button
+                className='block flex w-40 py-2 px-3 hover:bg-gray-300 hover:text-black text-sm'
+                onClick={() => {
+                  userContext.logout()
+                }}
+              >
+                <LogoutIcon className='w-6 h-6 mr-2' />
+                Logout
+              </button>
+            )}
           </div>
         </ClickOutHandler>
       </div>
