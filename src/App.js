@@ -13,12 +13,11 @@ function App() {
   const [showAuthModal, setShowAuthModal] = useState(false)
   const [modalType, setModalType] = useState('login')
   const [user, setUser] = useState({})
+
   useEffect(() => {
     axios
       .get('http://localhost:4000/user', { withCredentials: true })
-      .then(response => {
-        setUser(response.data)
-      })
+      .then(response => setUser(response.data))
   }, [])
 
   function logout() {
@@ -33,7 +32,7 @@ function App() {
     <AuthModalContext.Provider
       value={{ showAuthModal, setShowAuthModal, modalType, setModalType }}
     >
-      <UserContext.Provider value={{ ...user, logout }}>
+      <UserContext.Provider value={{ ...user, setUser, logout }}>
         <Header />
         <AuthModal />
         <BoardHeader />

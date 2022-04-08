@@ -3,6 +3,7 @@ import Input from './Input'
 import Button from './Button'
 import axios from 'axios'
 import AuthModalContext from './AuthModalContext'
+import UserContext from './UserContext'
 import ClickOutHandler from 'react-clickout-handler'
 
 function AuthModal(props) {
@@ -10,6 +11,7 @@ function AuthModal(props) {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
+  const user = useContext(UserContext)
   const modalContext = useContext(AuthModalContext)
 
   const visibleClass = modalContext.showAuthModal ? 'block' : 'hidden'
@@ -20,6 +22,16 @@ function AuthModal(props) {
     axios.post('http://localhost:4000/register', data, {
       withCredentials: true
     })
+  }
+
+  function login() {
+    const data = { username, password }
+    axios
+      .post('http://localhost:4000/login', data, { withCredentials: true })
+      .then(() => {
+        modalContext.setShowAuthModal(false)
+        user.setUser({ username })
+      })
   }
 
   return (
@@ -85,6 +97,7 @@ function AuthModal(props) {
             <Button
               className='w-full py-2 mb-3'
               style={{ borderRadius: '.3rem' }}
+              onClick={() => login()}
             >
               Log In
             </Button>
