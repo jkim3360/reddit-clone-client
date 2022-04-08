@@ -13,7 +13,9 @@ function CommentPage(props) {
       })
   }, [])
   return (
-    <div className='bg-reddit_dark'>{comment && <Post {...comment} />}</div>
+    <div className='bg-reddit_dark py-4'>
+      {comment && <Post {...comment} open={true} />}
+    </div>
   )
 }
 
