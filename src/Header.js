@@ -1,4 +1,5 @@
 import { useState, useContext } from 'react'
+import { Link } from 'react-router-dom'
 import logo from './assets/logo.png'
 import {
   BellIcon,
@@ -31,7 +32,9 @@ function Header() {
   return (
     <header className='w-full bg-reddit_dark p-2 items-center'>
       <div className='mx-4 flex relative'>
-        <img src={logo} className='w-8 h-8 mr-4' alt='logo' />
+        <Link to='/'>
+          <img src={logo} className='w-8 h-8 mr-4' alt='logo' />
+        </Link>
         <form
           action=''
           className='bg-reddit_dark-brighter px-3 flex rounded-md border border-reddit_border mx-4 flex-grow'
