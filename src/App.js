@@ -1,10 +1,13 @@
+import { useState, useEffect } from 'react'
+import { Switch, Route, BrowserRouter } from 'react-router-dom'
+
 import Header from './Header'
-import BoardHeader from './BoardHeader'
-import PostForm from './PostForm'
+import Board from './Board'
+import CommentPage from './CommentPage'
 import AuthModal from './AuthModal'
 import AuthModalContext from './AuthModalContext'
 import UserContext from './UserContext'
-import { useState, useEffect } from 'react'
+
 import axios from 'axios'
 
 import './styles.css'
@@ -34,27 +37,13 @@ function App() {
     >
       <UserContext.Provider value={{ ...user, setUser, logout }}>
         <Header />
+        <BrowserRouter>
+          <Switch>
+            <Route exact path='/' component={Board} />
+            <Route exact path='/comments/:id' component={CommentPage} />
+          </Switch>
+        </BrowserRouter>
         <AuthModal />
-        <BoardHeader />
-        <PostForm />
-        <div className='px-6 bg-reddit_dark text-reddit_text pb-4'>
-          <div className='border border-reddit_border bg-reddit_dark-brighter p-2 rounded-md'>
-            <h5 className='text-reddit_text-darker text-sm mb-1'>
-              Posted by u/AutoModerator 17 days ago
-            </h5>
-            <h2 className='text-xl mb-3'>
-              Monthly Getting Started / Web Dev Career Thread
-            </h2>
-            <div className='text-sm leading-6'>
-              <p>
-                Due to a growing influx of questions on this topic, it has been
-                decided to commit a monthly thread dedicated to this topic to
-                reduce the number of repeat posts on this topic. These types of
-                posts will no longer be allowed in the main thread.
-              </p>
-            </div>
-          </div>
-        </div>
       </UserContext.Provider>
     </AuthModalContext.Provider>
   )
