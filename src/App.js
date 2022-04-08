@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react'
 import { Switch, Route, BrowserRouter } from 'react-router-dom'
 
-import Header from './Header'
-import Board from './Board'
-import CommentPage from './CommentPage'
+import Routes from './Routes'
+
 import AuthModal from './AuthModal'
 import AuthModalContext from './AuthModalContext'
 import UserContext from './UserContext'
@@ -36,13 +35,7 @@ function App() {
       value={{ showAuthModal, setShowAuthModal, modalType, setModalType }}
     >
       <UserContext.Provider value={{ ...user, setUser, logout }}>
-        <Header />
-        <BrowserRouter>
-          <Switch>
-            <Route exact path='/' component={Board} />
-            <Route exact path='/comments/:id' component={CommentPage} />
-          </Switch>
-        </BrowserRouter>
+        <Routes />
         <AuthModal />
       </UserContext.Provider>
     </AuthModalContext.Provider>
