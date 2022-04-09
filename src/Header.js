@@ -136,6 +136,7 @@ function Header() {
                 className='block flex w-40 py-2 px-3 hover:bg-gray-300 hover:text-black text-sm'
                 onClick={() => {
                   userContext.logout()
+                  setUserDropdownVisibility('hidden')
                 }}
               >
                 <LogoutIcon className='w-6 h-6 mr-2' />

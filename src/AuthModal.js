@@ -19,9 +19,14 @@ function AuthModal(props) {
   function register(e) {
     e.preventDefault()
     const data = { email, username, password }
-    axios.post('http://localhost:4000/register', data, {
-      withCredentials: true
-    })
+    axios
+      .post('http://localhost:4000/register', data, {
+        withCredentials: true
+      })
+      .then(() => {
+        modalContext.setShowAuthModal(false)
+        user.setUser({ username })
+      })
   }
 
   function login() {
