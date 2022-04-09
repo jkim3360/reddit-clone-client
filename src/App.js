@@ -1,12 +1,8 @@
 import { useState, useEffect } from 'react'
-import { Switch, Route, BrowserRouter } from 'react-router-dom'
-
 import Routes from './Routes'
-
 import AuthModal from './AuthModal'
 import AuthModalContext from './AuthModalContext'
 import UserContext from './UserContext'
-
 import axios from 'axios'
 
 import './styles.css'
