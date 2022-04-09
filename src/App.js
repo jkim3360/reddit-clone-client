@@ -11,7 +11,6 @@ function App() {
   const [showAuthModal, setShowAuthModal] = useState(false)
   const [modalType, setModalType] = useState('login')
   const [user, setUser] = useState({})
-
   useEffect(() => {
     axios
       .get('http://localhost:4000/user', { withCredentials: true })

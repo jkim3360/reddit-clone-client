@@ -20,10 +20,11 @@ function PostModal(props) {
   const CreatePostsContext = useContext(CreatePostContext)
   const history = useHistory()
   const user = userContext.username
+  const userId = userContext.id
   const markdown = `Just a link: https://reactjs.com.`
 
   async function post() {
-    const data = { user, title, textarea }
+    const data = { userId, user, title, textarea }
     axios
       .post('http://localhost:4000/comment', data, {
         withCredentials: true
@@ -31,6 +32,13 @@ function PostModal(props) {
       .then(response => {
         let path = '/comments/' + response.data._id
         history.push(path)
+
+        const commentId = response.data._id
+        const data = { userId, commentId }
+
+        axios.put('http://localhost:4000/user', data, {
+          withCredentials: true
+        })
       })
       .catch(err => {
         console.error('There was an error posting.')
@@ -38,14 +46,6 @@ function PostModal(props) {
     props.onClickOut()
     setPosted(true)
   }
-
-  useEffect(() => {
-    axios
-      .get('http://localhost:4000/comments', { withCredentials: true })
-      .then(response => {
-        CreatePostsContext.setComments(response.data)
-      })
-  }, [posted])
 
   return (
     <div

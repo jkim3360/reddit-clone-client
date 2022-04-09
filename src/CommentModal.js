@@ -18,21 +18,21 @@ function CommentModal(props) {
     setComment({})
     props.onClickOut()
   }
-
+  // border border-reddit_dark-brightest my-4 w-3/4 sm:w-1/2 lg:w-1/4 bg-reddit_dark p-5 text-reddit_text self-center mx-auto rounded-md
   return (
     <div
       className={
         'w-screen h-screen fixed top-0 left-0 z-20 flex ' + visibleClass
       }
-      style={{ backgroundColor: 'rgba(0,0,0,0.6' }}
     >
       <ClickOutHandler onClickOut={() => close()}>
-        <div className='border border-reddit_dark-brightest my-4 w-3/4 sm:w-1/2 lg:w-1/4 bg-reddit_dark p-5 text-reddit_text self-center mx-auto rounded-md'>
-          <div
-            className='block overflow-scroll'
-            style={{ maxHeight: 'calc(100vh - 200px' }}
-          >
-            <PostContent {...comment} />
+        <div
+          className=' w-screen flex overflow-auto'
+          style={{ backgroundColor: 'rgba(0,0,0,0.6', top: '0' }}
+          onClick={() => close()}
+        >
+          <div className='w-3/4 sm:w-1/2 lg:w-1/4 mx-auto rounded-md text-reddit_text'>
+            <PostContent {...comment} isModal={true} />
           </div>
         </div>
       </ClickOutHandler>
