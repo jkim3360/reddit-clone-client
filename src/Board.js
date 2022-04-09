@@ -4,11 +4,11 @@ import PostListing from './PostListing'
 
 function Board() {
   return (
-    <div>
+    <>
       <BoardHeader />
       <PostForm />
       <PostListing />
-    </div>
+    </>
   )
 }
 
