@@ -7,6 +7,7 @@ import PostModal from './PostModal'
 import CreatePostContext from './CreatePostContext'
 
 function RoutingSwitch() {
+  const [comments, setComments] = useState([])
   const [postOpen, setPostOpen] = useState(false)
   const [createPost, openCreatePost] = useState(false)
 
@@ -42,7 +43,9 @@ function RoutingSwitch() {
   // }, [postOpen])
 
   return (
-    <CreatePostContext.Provider value={{ createPost, openCreatePost }}>
+    <CreatePostContext.Provider
+      value={{ createPost, openCreatePost, comments, setComments }}
+    >
       {commentId && (
         <CommentModal
           id={commentId}
@@ -50,9 +53,7 @@ function RoutingSwitch() {
           onClickOut={() => setPostOpen(false)}
         />
       )}
-
       {createPost && <PostModal onClickOut={() => openCreatePost(false)} />}
-
       <Switch location={location}>
         <Route exact path='/' component={Board} />
         <Route exact path='/comments/:id' component={CommentPage} />

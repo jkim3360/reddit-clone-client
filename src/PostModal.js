@@ -1,12 +1,51 @@
-import { useState } from 'react'
+import { useState, useEffect, useContext } from 'react'
+import { useHistory } from 'react-router-dom'
 import Input from './Input'
 import Textarea from './Textarea'
 import Button from './Button'
+import UserContext from './UserContext'
+import CreatePostContext from './CreatePostContext'
 
+import axios from 'axios'
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 import ClickOutHandler from 'react-clickout-handler'
 
 function PostModal(props) {
   const [title, setTitle] = useState('')
+  const [posted, setPosted] = useState(false)
+  const [textarea, setTextarea] = useState('')
+
+  const userContext = useContext(UserContext)
+  const CreatePostsContext = useContext(CreatePostContext)
+  const history = useHistory()
+  const user = userContext.username
+  const markdown = `Just a link: https://reactjs.com.`
+
+  async function post() {
+    const data = { user, title, textarea }
+    axios
+      .post('http://localhost:4000/comment', data, {
+        withCredentials: true
+      })
+      .then(response => {
+        let path = '/comments/' + response.data._id
+        history.push(path)
+      })
+      .catch(err => {
+        console.error('There was an error posting.')
+      })
+    props.onClickOut()
+    setPosted(true)
+  }
+
+  useEffect(() => {
+    axios
+      .get('http://localhost:4000/comments', { withCredentials: true })
+      .then(response => {
+        CreatePostsContext.setComments(response.data)
+      })
+  }, [posted])
 
   return (
     <div
@@ -29,9 +68,33 @@ function PostModal(props) {
               setTitle(e.target.value)
             }}
           />
-          <Textarea className={'w-full mb-3'} placeholder='Text (required)' />
+          <Textarea
+            className={'w-full mb-3'}
+            placeholder='Text (required)'
+            onChange={e => {
+              setTextarea(e.target.value)
+            }}
+          />
+          <ReactMarkdown># Hello, *world*!</ReactMarkdown>
+          <ReactMarkdown children={markdown} remarkPlugins={[remarkGfm]} />,
           <div className='text-right'>
-            <Button className='px-4 py-2'>POST</Button>
+            <Button
+              outline={1}
+              className='px-4 py-2'
+              onClick={e => {
+                props.onClickOut()
+              }}
+            >
+              Cancel
+            </Button>
+            <Button
+              className='px-4 py-2'
+              onClick={() => {
+                post()
+              }}
+            >
+              POST
+            </Button>
           </div>
         </div>
       </ClickOutHandler>

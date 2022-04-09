@@ -20,9 +20,14 @@ function PostForm() {
           >
             <Link to='/submit'>
               <input
-                onClick={() => {
+                onClick={e => {
+                  e.preventDefault()
                   CreatePostsContext.openCreatePost(true)
                 }}
+                // onFocus={e => {
+                //   e.preventDefault()
+                //   CreatePostsContext.openCreatePost(true)
+                // }}
                 type='text'
                 className='bg-reddit_dark-brightest p-2 px-3 text-sm block w-full rounded-md'
                 placeholder='New Post'

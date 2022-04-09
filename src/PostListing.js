@@ -1,14 +1,16 @@
+import { useEffect, useContext } from 'react'
 import Post from './Post'
-import { useState, useEffect } from 'react'
+import CreatePostContext from './CreatePostContext'
 import axios from 'axios'
 
 function PostsListing() {
-  const [comments, setComments] = useState([])
+  const CreatePostsContext = useContext(CreatePostContext)
+  const comments = CreatePostsContext.comments
 
   useEffect(() => {
     axios
       .get('http://localhost:4000/comments', { withCredentials: true })
-      .then(response => setComments(response.data))
+      .then(response => CreatePostsContext.setComments(response.data))
   }, [])
 
   return (
