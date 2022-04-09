@@ -1,6 +1,12 @@
+import { useContext } from 'react'
+import { Link } from 'react-router-dom'
 import avatar from './assets/avatar.png'
 
+import CreatePostContext from './CreatePostContext'
+
 function PostForm() {
+  const CreatePostsContext = useContext(CreatePostContext)
+
   return (
     <>
       <div className='bg-reddit_dark px-6 py-4 text-gray-400'>
@@ -12,11 +18,16 @@ function PostForm() {
             action=''
             className='flex-grow bg-reddit_dark-brightest border border-reddit_border ml-4 mr-2 rounded-md'
           >
-            <input
-              type='text'
-              className='bg-reddit_dark-brightest p-2 px-3 text-sm block w-full rounded-md'
-              placeholder='New Post'
-            />
+            <Link to='/submit'>
+              <input
+                onClick={() => {
+                  CreatePostsContext.openCreatePost(true)
+                }}
+                type='text'
+                className='bg-reddit_dark-brightest p-2 px-3 text-sm block w-full rounded-md'
+                placeholder='New Post'
+              />
+            </Link>
           </form>
         </div>
       </div>
