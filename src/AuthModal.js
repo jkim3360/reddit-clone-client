@@ -14,7 +14,7 @@ function AuthModal(props) {
   const user = useContext(UserContext)
   const modalContext = useContext(AuthModalContext)
 
-  const visibleClass = modalContext.showAuthModal ? 'block' : 'hidden'
+  const visibleClass = modalContext.showAuthModal ? ' block' : ' hidden'
 
   function register(e) {
     e.preventDefault()
@@ -37,9 +37,9 @@ function AuthModal(props) {
   return (
     <div
       className={
-        'w-screen h-screen fixed top-0 left-0 z-20 flex ' + visibleClass
+        'w-screen h-screen fixed top-0 left-0 z-20 flex' + visibleClass
       }
-      style={{ backgroundColor: 'rgba(0,0,0,0.6' }}
+      style={{ backgroundColor: 'rgba(0,0,0,0.6)' }}
     >
       <ClickOutHandler
         onClickOut={() => {
