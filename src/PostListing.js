@@ -9,12 +9,12 @@ function PostsListing() {
 
   useEffect(() => {
     axios
-      .get('http://localhost:4000/comments', { withCredentials: true })
+      .get('http://localhost:4000/posts', { withCredentials: true })
       .then(response => CreatePostsContext.setComments(response.data))
   }, [])
 
   return (
-    <div className='bg-reddit_dark'>
+    <div className='bg-reddit_dark self-center'>
       {comments.map(comment => (
         <Post {...comment} isListing={true} key={comment._id} />
       ))}

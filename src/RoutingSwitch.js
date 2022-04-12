@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react'
 import { Switch, Route, useLocation } from 'react-router-dom'
 import Board from './Board'
 import CommentModal from './CommentModal'
-import CommentPage from './CommentPage'
-import PostModal from './PostModal'
+import PostPage from './PostPage'
+import CreatePostModal from './CreatePostModal'
 import CreatePostContext from './CreatePostContext'
 
 function RoutingSwitch() {
@@ -53,11 +53,13 @@ function RoutingSwitch() {
           onClickOut={() => setPostOpen(false)}
         />
       )}
-      {createPost && <PostModal onClickOut={() => openCreatePost(false)} />}
+      {createPost && (
+        <CreatePostModal onClickOut={() => openCreatePost(false)} />
+      )}
       <Switch location={location}>
         <Route exact path='/' component={Board} />
-        <Route exact path='/comments/:id' component={CommentPage} />
-        <Route exact path='/submit' component={PostModal} />
+        <Route exact path='/posts/:id' component={PostPage} />
+        <Route exact path='/submit' component={CreatePostModal} />
       </Switch>
     </CreatePostContext.Provider>
   )
