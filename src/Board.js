@@ -6,8 +6,10 @@ function Board() {
   return (
     <>
       <BoardHeader />
-      <PostForm />
-      <PostListing />
+      <div className='flex flex-col'>
+        <PostForm />
+        <PostListing />
+      </div>
     </>
   )
 }
